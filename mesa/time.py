@@ -1,6 +1,10 @@
 '''
-Mesa Time Module
-=================================
+:mod:`time` -- Agent activation schedulers
+=====================================
+
+.. module:: Mesa Time
+    :synopsis: Classes for handling agent activation.
+.. moduleauthor:: David Masad
 
 Objects for handling the time component of a model. In particular, this module
 contains Schedulers, which handle agent activation. A Scheduler is an object
@@ -12,13 +16,15 @@ activating all agents in the same order every step, shuffling the activation
 order every time, activating each agent *on average* once per step, and more.
 
 Key concepts:
-    Step: Many models advance in 'steps'. A step may involve the activation of
-    all agents, or a random (or selected) subset of them. Each agent in turn
-    may have their own step() method.
+-------------
 
-    Time: Some models may simulate a continuous 'clock' instead of discrete
-    steps. However, by default, the Time is equal to the number of steps the
-    model has taken.
+*Step:* Many models advance in 'steps'. A step may involve the activation of
+all agents, or a random (or selected) subset of them. Each agent in turn
+may have their own step() method.
+
+*Time:* Some models may simulate a continuous 'clock' instead of discrete
+steps. However, by default, the Time is equal to the number of steps the
+model has taken.
 
 
 TODO: Have the schedulers use the model's randomizer, to keep random number
@@ -48,6 +54,11 @@ class BaseScheduler(object):
     def __init__(self, model):
         '''
         Create a new, empty BaseScheduler.
+
+        Parameters
+        ----------
+
+        model: The Model subclass object that contains this scheduler.
         '''
 
         self.model = model
@@ -59,25 +70,32 @@ class BaseScheduler(object):
         '''
         Add an Agent object to the schedule.
 
-        Args:
-            agent: An Agent to be added to the schedule. NOTE: The agent must
-            have a step(model) method.
+        Parameters
+        ----------
+        agent : Agent object
+            An Agent object to be added to the schedule. The agent is assumed
+            to have a *step(model)* method.
         '''
+
         self.agents.append(agent)
 
     def remove(self, agent):
         '''
         Remove all instances of a given agent from the schedule.
 
-        Args:
-            agent: An agent object.
+        Parameters
+        ----------
+        agent : Agent object
+            The Agent object to remove from the schedule.
         '''
+
         while agent in self.agents:
             self.agents.remove(agent)
 
     def step(self):
         '''
-        Execute the step of all the agents, one at a time.
+        Loop over all the agents, in the order they were added, and call each
+        one's *step* method.
         '''
         for agent in self.agents:
             agent.step(self.model)
@@ -86,7 +104,12 @@ class BaseScheduler(object):
 
     def get_agent_count(self):
         '''
-        Returns the current number of agents in the queue.
+        Get the number of agents currently in the schedule.
+
+        Returns
+        -------
+        count : integer
+            Number of agents in the schedule.
         '''
 
         return len(self.agents)

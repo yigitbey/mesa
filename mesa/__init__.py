@@ -1,7 +1,11 @@
 '''
-Mesa Agent-Based Modeling Framework
+:mod:`Mesa Core` -- Core Mesa Classes
+=====================================
 
-Core Objects: Model, and Agent.
+.. module:: Mesa Core
+    :synopsis: The two core Mesa classes, Model and Agent.
+.. moduleauthor:: David Masad
+.. moduleauthor:: Jacqueline Kazil
 '''
 
 import datetime as dt
