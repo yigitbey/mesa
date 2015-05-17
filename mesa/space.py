@@ -1,12 +1,40 @@
 '''
-Mesa Space Module
-=================================
+:mod:`mesa.space` -- Spatial representations for agents
+========================================================
 
-Objects used to add a spatial component to a model.
+.. module:: Mesa Space
+    :synopsis: Classes for handling agent position in space.
+.. moduleauthor:: David Masad
+.. moduleauthor:: Eugene Callahan
+.. moduleauthor:: Daniel Weitzenfeld
 
-Grid: base grid, a simple list-of-lists.
-SingleGrid: grid which strictly enforces one object per cell.
-MultiGrid: extension to Grid where each cell is a set of objects.
+Objects used to add a spatial component to a model. Many models are explicitly
+spatial, and involve agents moving around a space and interacting with their
+neighbors or the environment. Cellular automata, for example, are models where
+each space on a grid *is* an agent, fixed at that location.
+
+Many agent-based models use toroidal spaces, where the edges wrap around. This
+eliminates issues of agents on an edge having fewer neighbors and behaving
+differently.
+
+Roughly speaking, there are three 'kinds' of space:
+* Grids: In a grid, the space is divided into a discrete number of cells,
+  generally of equal size. Most grid cells are squares or rectangles, with four 
+  neighbors above, below, and to their left and right (called the Von Neumann 
+  Neighborhood), and four additional diagonal neighbors. However, grids of 
+  other shapes are also possible, such as hex grids.
+* Continuous: In continuous space, agents and other objects can be placed at
+  any arbitrary coordinates. There are no fixed definitions of 'neighbors', and
+  instead, we can look at all agents within a specified distance of a point or
+  object. In continuous space, agents can move any distance in any direction.
+  Continuous spaces can also be toroidal.
+* Geographic: Here, the space is an explicit map of some real-world area,
+  probably defined from GIS data (e.g. Shapefiles). This is technically a
+  subset of continuous space; however, objects will not just be points, and may
+  include shapes deliniating certain boundaries (counties, states) or 
+  connecting different points (road networks).
+
+Currently, only basic grids are implemented in Mesa, with the rest to come.
 
 '''
 # Instruction for PyLint to suppress variable name errors, since we have a

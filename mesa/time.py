@@ -1,5 +1,5 @@
 '''
-:mod:`time` -- Agent activation schedulers
+:mod:`mesa.time` -- Agent activation schedulers
 =====================================
 
 .. module:: Mesa Time
