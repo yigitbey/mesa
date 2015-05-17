@@ -25,11 +25,6 @@ may have their own step() method.
 *Time:* Some models may simulate a continuous 'clock' instead of discrete
 steps. However, by default, the Time is equal to the number of steps the
 model has taken.
-
-
-TODO: Have the schedulers use the model's randomizer, to keep random number
-seeds consistent and allow for replication.
-
 '''
 
 import random
