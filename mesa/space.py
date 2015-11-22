@@ -107,9 +107,10 @@ class Grid(object):
 
         Returns
         --------
-        iter : iterator
+        iterator
             An iterator over the contents of the neighboring cells, not
             including the center.
+
         """
         neighborhood = self.iter_neighborhood(pos, moore=moore)
         return self.iter_cell_list_contents(neighborhood)
