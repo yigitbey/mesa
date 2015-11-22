@@ -99,11 +99,11 @@ class Grid(object):
 
         Parameters
         ----------
-            pos : (x,y) tuple 
-                The position to get the neighbors of.
-            moore : Boolean (default=True) 
-                Whether to use Moore neighborhood (including diagonals) or 
-                Von Neumann (only up/down/left/right).
+        pos : (x,y) tuple 
+            The position to get the neighbors of.
+        moore : Boolean (default=True) 
+            Whether to use Moore neighborhood (including diagonals) or 
+            Von Neumann (only up/down/left/right).
 
         Returns
         --------
@@ -120,21 +120,26 @@ class Grid(object):
         Return an iterator over cell coordinates that are in the
         neighborhood of a certain point.
 
-        Args:
-            pos: Coordinate tuple for the neighborhood to get.
-            moore: If True, return Moore neighborhood
-                        (including diagonals)
-                   If False, return Von Neumann neighborhood
-                        (exclude diagonals)
-            include_center: If True, return the (x, y) cell as well.
-                            Otherwise, return surrounding cells only.
-            radius: radius, in cells, of neighborhood to get.
+        Parameters
+        -----------
+        pos : (x, y) tuple 
+            Center of the neighborhood to get.
+        moore :  Boolean
+            Determines whether to return Moore neighborhood (including
+            diagonals) if true; if False, return Von Neumann neighborhood 
+            (excluding diagonals)
+        include_center : Boolean (default=False)
+            If True, return the center cell as well. Otherwise, return
+            neighboring cells only.
+        radius : int (default=1)
+            Radius of cells around the center to get.
 
-        Returns:
-            A list of coordinate tuples representing the neighborhood;
-                With radius 1, at most 9 if
-                Moore, 5 if Von Neumann
-                (8 and 4 if not including the center).
+        Returns
+        --------
+        coord_list : list
+            A list of coordinate tuples representing the neighborhood.
+            With radius 1, at most 9 if Moore, 5 if Von Neumann (8 and 4 if not
+            including the center).
         """
         x, y = pos
         coordinates = set()
