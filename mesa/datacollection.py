@@ -58,6 +58,15 @@ class DataCollector(object):
         '''
         Instantiate a DataCollector with lists of model and agent reporters.
 
+        Parameters
+        ----------
+        model_reporters : dict 
+            Dictionary of reporter names and functions.
+        agent_reporters : dict 
+            Dictionary of reporter names and functions.
+        tables : dict
+            Dictionary of table names to lists of column names.
+
         Both model_reporters and agent_reporters accept a dictionary mapping a
         variable name to a method used to collect it.
         For example, if there was only one model-level reporter for number of
@@ -72,10 +81,6 @@ class DataCollector(object):
         when they are destroyed (to keep track of lifespans), it might look
         like:
             {"Lifespan": ["unique_id", "age"]}
-
-        Args:
-            model_reporters: Dictionary of reporter names and functions.
-            agent_reporters: Dictionary of reporter names and functions.
         '''
 
         self.model_reporters = {}
@@ -97,22 +102,27 @@ class DataCollector(object):
     def _new_model_reporter(self, reporter_name, reporter_function):
         '''
         Add a new model-level reporter to collect.
-        Args:
-            reporter_name: Name of the model-level variable to collect.
-            reporter_function: Function object that returns the variable when
-                               given a model instance.
-        '''
 
+        Parameters
+        ----------
+        reporter_name : string 
+            Name of the model-level variable to collect.
+        reporter_function : function 
+            Function that returns the variable from a model instance.
+        '''
         self.model_reporters[reporter_name] = reporter_function
         self.model_vars[reporter_name] = []
 
     def _new_agent_reporter(self, reporter_name, reporter_function):
         '''
         Add a new agent-level reporter to collect.
-        Args:
-            reporter_name: Name of the agent-level variable to collect.
-            reporter_function: Function object that returns the variable when
-                               given an agent object.
+
+        Parameters
+        ----------
+        reporter_name : string 
+            Name of the agent-level variable to collect.
+        reporter_function : function 
+            Function that returns the variable when given an agent object.
         '''
         self.agent_reporters[reporter_name] = reporter_function
         self.agent_vars[reporter_name] = []
@@ -120,9 +130,13 @@ class DataCollector(object):
     def _new_table(self, table_name, table_columns):
         '''
         Add a new table that objects can write to.
-        Args:
-            table_name: Name of the new table.
-            table_columns: List of columns to add to the table.
+
+        Parameters
+        ----------
+        table_name : string
+            Name of the new table.
+        table_columns : list 
+            List of column names to add to the table.
         '''
         new_table = {column: [] for column in table_columns}
         self.tables[table_name] = new_table
@@ -130,6 +144,11 @@ class DataCollector(object):
     def collect(self, model):
         '''
         Collect all the data for the given model object.
+
+        Parameters
+        ----------
+        model : Model
+            Model object to collect model- and agent-level variables from.
         '''
         if self.model_reporters:
             for var, reporter in self.model_reporters.items():
@@ -146,11 +165,15 @@ class DataCollector(object):
         '''
         Add a row dictionary to a specific table.
 
-        Args:
-            table_name: Name of the table to append a row to.
-            row: A dictionary of the form {column_name: value...}
-            ignore_missing: If True, fill any missing columns with Nones;
-                            if False, throw an error if any columns are missing
+        Parameters
+        ----------
+        table_name : string
+            Name of the table to append a row to.
+        row : dictionary
+            A row dictionary of the form {column_name: value...}
+        ignore_missing : Boolean (default=False)
+            If True, fill any missing columns with Nones; if False, raise an
+            error if any columns are missing.
         '''
         if table_name not in self.tables:
             raise Exception("Table does not exist.")
@@ -166,18 +189,25 @@ class DataCollector(object):
     def get_model_vars_dataframe(self):
         '''
         Create a pandas DataFrame from the model variables.
-        The DataFrame has one column for each model variable, and the index is
-        (implicitly) the model tick.
+
+        Returns
+        -------
+        DataFrame
+            The DataFrame has one column for each model variable, and the index
+            is (implicitly) the model tick.
         '''
         return pd.DataFrame(self.model_vars)
 
     def get_agent_vars_dataframe(self):
         '''
         Create a pandas DataFrame from the agent variables.
-        The DataFrame has one column for each variable, with two additional
-        columns for tick and agent_id.
-        '''
 
+        Returns
+        -------
+        DataFrame
+            The DataFrame has one column for each variable, with model step and
+            agent_id as the index values.
+        '''
         data = defaultdict(dict)
         for var, records in self.agent_vars.items():
             for step, entries in enumerate(records):
@@ -193,8 +223,15 @@ class DataCollector(object):
         '''
         Create a pandas DataFrame from a particular table.
 
-        Args:
-            table_name: The name of the table to convert.
+        Parameters
+        ----------
+        table_name : string
+            The name of the table to convert.
+
+        Returns
+        -------
+        DataFrame
+            A DataFrame of the desired table.
         '''
         if table_name not in self.tables:
             raise Exception("No such table.")

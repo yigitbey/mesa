@@ -31,24 +31,26 @@ class BatchRunner(object):
         '''
         Create a new BatchRunner for a given model with the given parameters.
 
-        Args:
-            model_cls: The class of model to batch-run.
-            parameter_values: Dictionary of parameters to their values or
-                ranges of values. For example:
-                    {"param_1": range(5),
-                     "param_2": [1, 5, 10],
-                      "const_param": 100}
-            iterations: How many times to run the model at each combination of
-                parameters.
-            max_steps: After how many steps to halt each run if it hasn't
-                halted on its own.
-            model_reporters: Dictionary of variables to collect on each run at
-                the end, with variable names mapped to a function to collect
-                them. For example:
-                    {"agent_count": lambda m: m.schedule.get_agent_count()}
-            agent_reporters: Like model_reporters, but each variable is now
-                collected at the level of each agent present in the model at
-                the end of the run.
+        Parameters
+        ----------
+        model_cls : Class 
+            The class of model to batch-run.
+        parameter_values : dict 
+            Dictionary of parameters to their values or ranges of values. 
+            For example: {"param_1": range(5), "param_2": [1, 5, 10],
+            "const_param": 100}
+        iterations : int (default=1)
+            How many times to run the model at each combination of parameters.
+        max_steps : int (default=1000) 
+            How many steps to halt each run by, if it hasn't halted on its own.
+        model_reporters : dict 
+            Dictionary of variables to collect on each run at the end, with
+            variable names mapped to a function to collect
+            them. For example:
+            {"agent_count": lambda m: m.schedule.get_agent_count()}
+        agent_reporters : dict 
+            Like model_reporters, but each variable is now collected at the
+            level of each agent present in the model at the end of the run.
         '''
         self.model_cls = model_cls
         self.parameter_values = {param: self.make_iterable(vals)
@@ -89,17 +91,32 @@ class BatchRunner(object):
 
     def run_model(self, model):
         '''
-        Run a model object to completion, or until reaching max steps.
+        Run a given model object to completion, or until reaching max steps.
 
         If your model runs in a non-standard way, this is the method to modify
         in your subclass.
+
+        Parameters
+        ----------
+        model : Model
+            Model object to run.
         '''
         while model.running and model.schedule.steps < self.max_steps:
             model.step()
 
     def collect_model_vars(self, model):
         '''
-        Run reporters and collect model-level variables.
+        Run reporters on a finished model and collect model-level variables.
+
+        Parameters
+        ----------
+        model : Model
+            Model object that has already been run to completion.
+
+        Returns
+        -------
+        dict
+            A dictionary of model-level variable names to their values.
         '''
         model_vars = {}
         for var, reporter in self.model_reporters.items():
@@ -108,7 +125,18 @@ class BatchRunner(object):
 
     def collect_agent_vars(self, model):
         '''
-        Run reporters and collect agent-level variables.
+        Run reporters on a finished model and collect agent-level variables.
+
+        Parameters
+        ----------
+        model : Model
+            Model object that has already been run to completion.
+
+        Returns
+        -------
+        dict
+            A dictionary of agent unique_ids to dictionaries of variable-value
+            pairs.
         '''
         agent_vars = {}
         for agent in model.schedule.agents:
@@ -121,6 +149,10 @@ class BatchRunner(object):
     def get_model_vars_dataframe(self):
         '''
         Generate a pandas DataFrame from the model-level collected variables.
+
+        Returns
+        -------
+        DataFrame
         '''
         index_col_names = list(self.parameter_values.keys())
         index_col_names.append("Run")
@@ -135,6 +167,10 @@ class BatchRunner(object):
     def get_agent_vars_dataframe(self):
         '''
         Generate a pandas DataFrame from the agent-level variables collected.
+
+        Returns
+        -------
+        DataFrame
         '''
         index_col_names = list(self.parameter_values.keys())
         index_col_names += ["Run", "AgentID"]
@@ -150,6 +186,16 @@ class BatchRunner(object):
     def make_iterable(val):
         '''
         Helper method to ensure a value is a non-string iterable.
+
+        Parameters
+        ----------
+        val : object
+
+        Returns
+        -------
+        iterable
+            If the input val isn't interable, return it as a one-element list.
+            Otherwise, return the input.
         '''
         if hasattr(val, "__iter__") and type(val) is not str:
             return val

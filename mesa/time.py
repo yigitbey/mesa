@@ -38,6 +38,17 @@ class BaseScheduler(object):
     object as its single argument.
 
     (This is explicitly meant to replicate the scheduler in MASON).
+
+    Attributes
+    ----------
+    model : Model
+        The Mesa model object this scheduler is a part of.
+    steps : int
+        Counter for how many steps the model has run for.
+    time : int
+        How much simulated time has past; here it is the same as steps.
+    agents : list
+        List of agents added to the scheduler.
     '''
 
     model = None
@@ -48,6 +59,11 @@ class BaseScheduler(object):
     def __init__(self, model):
         '''
         Create a new, empty BaseScheduler.
+
+        Parameters
+        ----------
+        model : Model
+            Model this scheduler is associated with.
         '''
 
         self.model = model
@@ -59,9 +75,11 @@ class BaseScheduler(object):
         '''
         Add an Agent object to the schedule.
 
-        Args:
-            agent: An Agent to be added to the schedule. NOTE: The agent must
-            have a step(model) method.
+        Parameters
+        ----------
+        agent : Agent 
+            An Agent to be added to the schedule. The agent must have a 
+            `step(model)` method.
         '''
         self.agents.append(agent)
 
@@ -69,15 +87,18 @@ class BaseScheduler(object):
         '''
         Remove all instances of a given agent from the schedule.
 
-        Args:
-            agent: An agent object.
+        Parameters
+        ----------
+        agent : Agent 
+            Agent object to remove.
         '''
         while agent in self.agents:
             self.agents.remove(agent)
 
     def step(self):
         '''
-        Execute the step of all the agents, one at a time.
+        Runs the `step` method of each agent that has been added to the
+        scheduler, in the order the agents were added in.
         '''
         for agent in self.agents:
             agent.step(self.model)
@@ -86,9 +107,11 @@ class BaseScheduler(object):
 
     def get_agent_count(self):
         '''
-        Returns the current number of agents in the queue.
+        Returns
+        -------
+        int
+            The number of agents that have been added to the model.
         '''
-
         return len(self.agents)
 
 
@@ -99,8 +122,6 @@ class RandomActivation(BaseScheduler):
 
     This is equivalent to the NetLogo 'ask agents...' and is generally the
     default behavior for an ABM.
-
-    Assumes that all agents have a step(model) method.
     '''
 
     def step(self):
@@ -119,13 +140,13 @@ class SimultaneousActivation(BaseScheduler):
     '''
     A scheduler to simulate the simultaneous activation of all the agents.
 
-    This scheduler requires that each agent have two methods: step and advance.
-    step(model) activates the agent and stages any necessary changes, but does
-    not apply them yet. advance(model) then applies the changes.
+    This scheduler requires that each agent have two methods: `step(model)` and
+    `advance(model)`. `step` activates the agent and stages any necessary
+    changes, but does not apply them yet. `advance` then applies the changes.
     '''
     def step(self):
         '''
-        Step all agents, then advance them.
+        Step all agents, in fixed order, then advance them.
         '''
         for agent in self.agents:
             agent.step(self.model)
