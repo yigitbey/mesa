@@ -26,31 +26,38 @@ Y = 1
 
 class Grid(object):
     '''
-    Base class for a square grid.
+    Base class for a grid space, composed of cells.
 
     Grid cells are indexed by [y][x], where [0][0] is assumed to be -- top-left
     and [height-1][width-1] is the bottom-right. If a grid is toroidal, the top
     and bottom, and left and right, edges wrap to each other
 
-    Properties:
-        width, height: The grid's width and height.
-        torus: Boolean which determines whether to treat the grid as a torus.
+    Parameters
+    -----------
+    width, height :  integers
+        The grid's width and height.
+    torus : Boolean
+        Whether the edges wrap around to make the grid toroidal.
 
-        grid: Internal list-of-lists which holds the grid cells themselves.
+    grid : list of lists 
+        Internal list-of-lists which holds the grid cells themselves.
 
-    Methods:
+    Methods
         get_neighbors: Returns the objects surrounding a given cell.
         get_neighborhood: Returns the cells surrounding a given cell.
         get_cell_list_contents: Returns the contents of a list of cells
             ((x,y) tuples)
     '''
     def __init__(self, height, width, torus):
-        '''
-        Create a new grid.
+        '''Create a new grid.
 
-        Args:
-            height, width: The height and width of the grid
-            torus: Boolean whether the grid wraps or not.
+        Parameters
+        -----------
+        height, width : int
+            The height and width of the grid
+        torus : 
+            Whether the edges wrap around to make the grid toroidal.
+
         '''
         self.height = height
         self.width = width
@@ -88,13 +95,21 @@ class Grid(object):
                 yield self.grid[row][col], col, row  # agent, x, y
 
     def neighbor_iter(self, pos, moore=True):
-        """
-        Iterate over position neighbors.
+        """Iterate over position neighbors.
 
-        Args:
-            pos: (x,y) coords tuple for the position to get the neighbors of.
-            moore: Boolean for whether to use Moore neighborhood (including
-                   diagonals) or Von Neumann (only up/down/left/right).
+        Parameters
+        ----------
+            pos : (x,y) tuple 
+                The position to get the neighbors of.
+            moore : Boolean (default=True) 
+                Whether to use Moore neighborhood (including diagonals) or 
+                Von Neumann (only up/down/left/right).
+
+        Returns
+        --------
+        iter : iterator
+            An iterator over the contents of the neighboring cells, not
+            including the center.
         """
         neighborhood = self.iter_neighborhood(pos, moore=moore)
         return self.iter_cell_list_contents(neighborhood)
