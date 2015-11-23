@@ -47,7 +47,7 @@ For more help on using Mesa, check out the following resources:
 * `Email list`_
 * `PyPI`_
 
-.. _`Intro to Mesa Tutorial` : http://mesa.readthedocs.org/en/latest/intro-tutorial.html
+.. _`Intro to Mesa Tutorial` : intro-tutorial.html
 .. _`Docs` : http://mesa.readthedocs.org/en/latest/
 .. _`Email list` : https://groups.google.com/d/forum/projectmesa
 .. _`PyPI` : https://pypi.python.org/pypi/Mesa/

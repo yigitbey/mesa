@@ -1,28 +1,33 @@
 '''
-Mesa Time Module
-=================================
+This module contains classes for handling the time component of a model. In
+particular, it contains Schedulers, which handle agent activation. A Scheduler
+is an object which controls when agents are called upon to act, and when.
 
-Objects for handling the time component of a model. In particular, this module
-contains Schedulers, which handle agent activation. A Scheduler is an object
-which controls when agents are called upon to act, and when.
+Time in agent-based models generally advances in discrete steps (sometimes 
+called ticks). Within each step of the model, some or all of the model agents
+are activated, one at a time. When an agent is activated, it executes whatever
+behavior it has been programmed with (e.g. observes its surrounding, moves,
+reproduces, dies); then it is another agent's turn to act. There are obviously
+variants on this as well. The way agents are activated can have a serious
+impact on model behavior, so it's important to specify it explicity. 
 
-The activation order can have a serious impact on model behavior, so it's
-important to specify it explicity. Example simple activation regimes include
-activating all agents in the same order every step, shuffling the activation
-order every time, activating each agent *on average* once per step, and more.
+There are many possible activation regimes. Here are some examples:
+- All agents are activated in the same order every model step.
+- All agents are activated every step, in random order.
+- Some number *N* random agents are activated every step, in random order.
 
-Key concepts:
-    Step: Many models advance in 'steps'. A step may involve the activation of
-    all agents, or a random (or selected) subset of them. Each agent in turn
-    may have their own step() method.
+The schedulers are meant to handle these activation regimes. They have a common
+set of methods, so that you can change the activation regime by changing as
+little code as possible; ideally only one line. A scheduler object is created
+when you instantiate a model; agents are added to the scheduler when they are
+created, and removed when they are destroyed. Then the scheduler handles
+activating all the agents according to the specified regime.
 
-    Time: Some models may simulate a continuous 'clock' instead of discrete
-    steps. However, by default, the Time is equal to the number of steps the
-    model has taken.
-
-
-TODO: Have the schedulers use the model's randomizer, to keep random number
-seeds consistent and allow for replication.
+Note that schedulers are intended to handle only activations of agents and
+other objects inside the simulation itself. Often you'll have other things you
+want to have happen every step -- for example, collecting data on all the
+agents, or writing some output to an external file. These shouldn't go in the
+scheduler, but in the model's `step` method.
 
 '''
 
