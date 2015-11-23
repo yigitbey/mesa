@@ -472,8 +472,8 @@ class SingleGrid(Grid):
             a random empty cell.
         """
         if pos is None:
-            coords = self.find_empty()
-            if coords is None:
+            pos = self.find_empty()
+            if pos is None:
                 raise Exception("ERROR: Grid full")
         agent.pos = pos
         self._place_agent(pos, agent)
