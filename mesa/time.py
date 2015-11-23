@@ -12,6 +12,7 @@ variants on this as well. The way agents are activated can have a serious
 impact on model behavior, so it's important to specify it explicity. 
 
 There are many possible activation regimes. Here are some examples:
+
 - All agents are activated in the same order every model step.
 - All agents are activated every step, in random order.
 - Some number *N* random agents are activated every step, in random order.
@@ -27,7 +28,8 @@ Note that schedulers are intended to handle only activations of agents and
 other objects inside the simulation itself. Often you'll have other things you
 want to have happen every step -- for example, collecting data on all the
 agents, or writing some output to an external file. These shouldn't go in the
-scheduler, but in the model's `step` method.
+scheduler, but in the model's `step` method, before or after the scheduler's
+`step` method is called.
 
 '''
 
