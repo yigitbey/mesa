@@ -33,22 +33,22 @@ class BatchRunner(object):
 
         Parameters
         ----------
-        model_cls : Class 
+        model_cls : Class
             The class of model to batch-run.
-        parameter_values : dict 
-            Dictionary of parameters to their values or ranges of values. 
+        parameter_values : dict
+            Dictionary of parameters to their values or ranges of values.
             For example: {"param_1": range(5), "param_2": [1, 5, 10],
             "const_param": 100}
         iterations : int (default=1)
             How many times to run the model at each combination of parameters.
-        max_steps : int (default=1000) 
+        max_steps : int (default=1000)
             How many steps to halt each run by, if it hasn't halted on its own.
-        model_reporters : dict 
+        model_reporters : dict
             Dictionary of variables to collect on each run at the end, with
             variable names mapped to a function to collect
             them. For example:
             {"agent_count": lambda m: m.schedule.get_agent_count()}
-        agent_reporters : dict 
+        agent_reporters : dict
             Like model_reporters, but each variable is now collected at the
             level of each agent present in the model at the end of the run.
         '''

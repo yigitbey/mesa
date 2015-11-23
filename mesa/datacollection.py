@@ -60,9 +60,9 @@ class DataCollector(object):
 
         Parameters
         ----------
-        model_reporters : dict 
+        model_reporters : dict
             Dictionary of reporter names and functions.
-        agent_reporters : dict 
+        agent_reporters : dict
             Dictionary of reporter names and functions.
         tables : dict
             Dictionary of table names to lists of column names.
@@ -105,9 +105,9 @@ class DataCollector(object):
 
         Parameters
         ----------
-        reporter_name : string 
+        reporter_name : string
             Name of the model-level variable to collect.
-        reporter_function : function 
+        reporter_function : function
             Function that returns the variable from a model instance.
         '''
         self.model_reporters[reporter_name] = reporter_function
@@ -119,9 +119,9 @@ class DataCollector(object):
 
         Parameters
         ----------
-        reporter_name : string 
+        reporter_name : string
             Name of the agent-level variable to collect.
-        reporter_function : function 
+        reporter_function : function
             Function that returns the variable when given an agent object.
         '''
         self.agent_reporters[reporter_name] = reporter_function
@@ -135,7 +135,7 @@ class DataCollector(object):
         ----------
         table_name : string
             Name of the new table.
-        table_columns : list 
+        table_columns : list
             List of column names to add to the table.
         '''
         new_table = {column: [] for column in table_columns}

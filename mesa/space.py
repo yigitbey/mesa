@@ -38,7 +38,7 @@ class Grid(object):
         The grid's width and height.
     torus : Boolean
         Whether the edges wrap around to make the grid toroidal.
-    grid : list of lists 
+    grid : list of lists
         Internal list-of-lists which holds the grid cells themselves.
 
     Methods
@@ -47,7 +47,7 @@ class Grid(object):
         Returns the objects surrounding a given cell.
     get_neighborhood
         Returns the cells surrounding a given cell.
-    get_cell_list_contents 
+    get_cell_list_contents
         Returns the contents of a list of cells.
     '''
     def __init__(self, height, width, torus):
@@ -101,10 +101,10 @@ class Grid(object):
 
         Parameters
         ----------
-        pos : (x,y) tuple 
+        pos : (x,y) tuple
             The position to get the neighbors of.
-        moore : Boolean (default=True) 
-            Whether to use Moore neighborhood (including diagonals) or 
+        moore : Boolean (default=True)
+            Whether to use Moore neighborhood (including diagonals) or
             Von Neumann (only up/down/left/right).
 
         Returns
@@ -125,11 +125,11 @@ class Grid(object):
 
         Parameters
         ----------
-        pos : (x, y) tuple 
+        pos : (x, y) tuple
             Center of the neighborhood to get.
         moore :  Boolean
             Determines whether to return Moore neighborhood (including
-            diagonals) if true; if False, return Von Neumann neighborhood 
+            diagonals) if true; if False, return Von Neumann neighborhood
             (excluding diagonals)
         include_center : Boolean (default=False)
             If True, return the center cell as well. Otherwise, return
@@ -184,12 +184,12 @@ class Grid(object):
         pos : tuple
             Coordinates for the neighborhood to get.
         moore : Boolean
-            If True, return Moore neighborhood (including diagonals). If False, 
+            If True, return Moore neighborhood (including diagonals). If False,
             return Von Neumann neighborhood (exclude diagonals).
         include_center : Boolean (default=False)
             If True, return the (x, y) cell as well. Otherwise, return
             surrounding cells only.
-        radius : int (default=1) 
+        radius : int (default=1)
             Radius, in cells, of neighborhood to get.
 
         Returns
@@ -212,18 +212,18 @@ class Grid(object):
         pos : tuple
             Coordinates for the neighborhood to get.
         moore : Boolean
-            If True, return Moore neighborhood (including diagonals). If False, 
+            If True, return Moore neighborhood (including diagonals). If False,
             return Von Neumann neighborhood (exclude diagonals).
         include_center : Boolean (default=False)
             If True, return the (x, y) cell as well. Otherwise, return
             surrounding cells only.
-        radius : int (default=1) 
+        radius : int (default=1)
             Radius, in cells, of neighborhood to get.
 
         Returns
         -------
         iterator
-            An iterator of non-None objects in the given neighborhood; at most 
+            An iterator of non-None objects in the given neighborhood; at most
             9 if Moore, 5 if Von-Neumann (8 and 4 if not including the center).
         """
         neighborhood = self.iter_neighborhood(
@@ -240,18 +240,18 @@ class Grid(object):
         pos : tuple
             Coordinates for the neighborhood to get.
         moore : Boolean
-            If True, return Moore neighborhood (including diagonals). If False, 
+            If True, return Moore neighborhood (including diagonals). If False,
             return Von Neumann neighborhood (exclude diagonals).
         include_center : Boolean (default=False)
             If True, return the (x, y) cell as well. Otherwise, return
             surrounding cells only.
-        radius : int (default=1) 
+        radius : int (default=1)
             Radius, in cells, of neighborhood to get.
 
         Returns
         -------
         list
-            A list of non-None objects in the given neighborhood; at most 9 if 
+            A list of non-None objects in the given neighborhood; at most 9 if
             Moore, 5 if Von-Neumann (8 and 4 if not including the center).
         """
         return list(self.iter_neighbors(
@@ -295,7 +295,7 @@ class Grid(object):
 
         Parameters
         ----------
-        cell_list : list 
+        cell_list : list
             List of (x, y) tuples
 
         Returns
@@ -312,7 +312,7 @@ class Grid(object):
 
         Parameters
         ----------
-        cell_list : list 
+        cell_list : list
             (x, y) tuples of cells.
 
         Returns
@@ -328,10 +328,10 @@ class Grid(object):
 
         Parameters
         ----------
-        agent : Agent 
+        agent : Agent
             Agent to move. Assumed to have its current location stored as a
             tuple in a 'pos' property.
-        pos : tuple 
+        pos : tuple
             New position to move the agent to.
         '''
         self._remove_agent(agent.pos, agent)
@@ -344,10 +344,10 @@ class Grid(object):
 
         Parameters
         ----------
-        agent : Agent 
+        agent : Agent
             Agent to move. Assumed to have its current location stored as a
             tuple in a 'pos' property.
-        pos : Tuple 
+        pos : Tuple
             New position to move the agent to.
         '''
         self._place_agent(pos, agent)
@@ -359,9 +359,9 @@ class Grid(object):
 
         Parameters
         ----------
-        pos : tuple 
+        pos : tuple
             New position to place the agent at.
-        agent : Agent 
+        agent : Agent
             Agent to place. Assumed to have its current location stored as a
             tuple in a 'pos' property.
         '''
@@ -374,9 +374,9 @@ class Grid(object):
 
         Parameters
         ----------
-        pos : tuple 
+        pos : tuple
             Position to remove the agent from.
-        agent : Agent 
+        agent : Agent
             Agent to remove from grid.
         '''
         x, y = pos
@@ -407,9 +407,9 @@ class SingleGrid(Grid):
 
         Parameters
         ----------
-        height, width : int 
+        height, width : int
             The height and width of the grid
-        torus : Boolean 
+        torus : Boolean
             Whether the grid wraps or not.
         '''
         super().__init__(height, width, torus)
@@ -484,9 +484,9 @@ class SingleGrid(Grid):
 
         Parameters
         ----------
-        pos : Tuple 
+        pos : Tuple
             New position to place the agent at.
-        agent : Agent 
+        agent : Agent
             Agent to move. Assumed to have its current location stored as a
             tuple in a 'pos' property.
         '''
@@ -502,9 +502,9 @@ class SingleGrid(Grid):
 
         Parameters
         ----------
-        pos : Tuple 
+        pos : Tuple
             Position to remove the agent from.
-        agent : Agent 
+        agent : Agent
             Agent to remove from grid.
         '''
         super()._remove_agent(pos, agent)
@@ -527,7 +527,7 @@ class MultiGrid(Grid):
         The grid's width and height.
     torus : Boolean
         Whether the edges wrap around to make the grid toroidal.
-    grid : list of lists 
+    grid : list of lists
         Internal list-of-lists which holds the grid cells themselves.
 
     Methods
@@ -536,7 +536,7 @@ class MultiGrid(Grid):
         Returns the objects surrounding a given cell.
     get_neighborhood
         Returns the cells surrounding a given cell.
-    get_cell_list_contents 
+    get_cell_list_contents
         Returns the contents of a list of cells.
     '''
 
@@ -553,9 +553,9 @@ class MultiGrid(Grid):
 
         Parameters
         ----------
-        pos : Tuple 
+        pos : Tuple
             New position to place the agent at.
-        agent : Agent 
+        agent : Agent
             Agent to move. Assumed to have its current location stored as a
             tuple in a 'pos' property.
         '''
@@ -568,9 +568,9 @@ class MultiGrid(Grid):
 
         Parameters
         ----------
-        pos : Tuple 
+        pos : Tuple
             Position to remove the agent from.
-        agent : Agent 
+        agent : Agent
             Agent to remove from grid.
         '''
         x, y = pos
@@ -582,7 +582,7 @@ class MultiGrid(Grid):
 
         Parameters
         ----------
-        cell_list : list 
+        cell_list : list
             List of (x, y) tuples
 
         Returns
@@ -614,16 +614,16 @@ class ContinuousSpace(object):
         ----------
         x_max, y_max : float
             Maximum x and y coordinates for the space.
-        torus : Boolean 
+        torus : Boolean
             Whether the edges loop around.
-        x_min, y_min : float (default=0) 
+        x_min, y_min : float (default=0)
             If provided, set the minimum x and y coordinates for the space.
-            Below them, values loop to the other edge (if torus=True) or raise 
+            Below them, values loop to the other edge (if torus=True) or raise
             an exception.
-        grid_width, grid_height : int (default=100) 
+        grid_width, grid_height : int (default=100)
             Determine the size of the internal storage grid. More cells will
             slow down movement, but speed up neighbor lookup. Probably only
-            fiddle with this if one or the other is impacting your model's 
+            fiddle with this if one or the other is impacting your model's
             performance.
         '''
         self.x_min = x_min
@@ -645,10 +645,10 @@ class ContinuousSpace(object):
 
         Parameters
         ----------
-        agent : Agent 
+        agent : Agent
             Agent to move. Assumed to have its current location stored as a
             tuple in a 'pos' property.
-        pos : Tuple 
+        pos : Tuple
             New position to move the agent to.
         '''
         pos = self.torus_adj(pos)
@@ -661,10 +661,10 @@ class ContinuousSpace(object):
 
         Parameters
         ----------
-        agent : Agent 
+        agent : Agent
             Agent to move. Assumed to have its current location stored as a
             tuple in a 'pos' property.
-        pos : tuple 
+        pos : tuple
             New position to move the agent to.
         '''
         pos = self.torus_adj(pos)
@@ -678,9 +678,9 @@ class ContinuousSpace(object):
 
         Parameters
         ----------
-        pos : tuple 
+        pos : tuple
             New position to place the agent at.
-        agent : Agent 
+        agent : Agent
             Agent to place. Assumed to have its current location stored as a
             tuple in a 'pos' property.
         '''
@@ -693,9 +693,9 @@ class ContinuousSpace(object):
 
         Parameters
         ----------
-        pos : tuple 
+        pos : tuple
             Position to remove the agent from.
-        agent : Agent 
+        agent : Agent
             Agent to remove from grid.
         '''
         cell = self._point_to_cell(pos)
@@ -707,12 +707,12 @@ class ContinuousSpace(object):
 
         Parameters
         ----------
-        pos : tuple 
+        pos : tuple
             (x,y) coordinate tuple to center the search at.
-        radius : float 
+        radius : float
             Get all the objects within this distance of the center.
-        include_center : Boolean (default=True) 
-            If True, include an object at the *exact* provided coordinates. 
+        include_center : Boolean (default=True)
+            If True, include an object at the *exact* provided coordinates.
             i.e. if you are searching for the neighbors of a given agent, True
             will include that agent in the results.
 
@@ -741,7 +741,7 @@ class ContinuousSpace(object):
 
         Parameters
         ----------
-        pos_1, pos_2 : tuples 
+        pos_1, pos_2 : tuples
             Coordinate tuples for both points.
 
         Returns

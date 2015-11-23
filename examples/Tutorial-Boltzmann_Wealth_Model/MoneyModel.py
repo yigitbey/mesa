@@ -35,7 +35,7 @@ class MoneyModel(Model):
     def step(self):
         self.datacollector.collect(self)
         self.schedule.step()
-    
+
     def run_model(self, n):
         for i in range(n):
             self.step()

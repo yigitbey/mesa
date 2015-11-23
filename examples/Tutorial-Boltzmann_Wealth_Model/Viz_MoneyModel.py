@@ -19,7 +19,7 @@ def agent_portrayal(agent):
     return portrayal
 
 grid = CanvasGrid(agent_portrayal, 10, 10, 500, 500)
-chart = ChartModule([{"Label": "Gini", "Color": "Black"}], 
+chart = ChartModule([{"Label": "Gini", "Color": "Black"}],
                             data_collector_name='datacollector')
 
 server = ModularServer(MoneyModel, [grid, chart], "Money Model", 100, 10, 10)

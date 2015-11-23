@@ -3,13 +3,13 @@ This module contains classes for handling the time component of a model. In
 particular, it contains Schedulers, which handle agent activation. A Scheduler
 is an object which controls when agents are called upon to act, and when.
 
-Time in agent-based models generally advances in discrete steps (sometimes 
+Time in agent-based models generally advances in discrete steps (sometimes
 called ticks). Within each step of the model, some or all of the model agents
 are activated, one at a time. When an agent is activated, it executes whatever
 behavior it has been programmed with (e.g. observes its surrounding, moves,
 reproduces, dies); then it is another agent's turn to act. There are obviously
 variants on this as well. The way agents are activated can have a serious
-impact on model behavior, so it's important to specify it explicity. 
+impact on model behavior, so it's important to specify it explicity.
 
 There are many possible activation regimes. Here are some examples:
 
@@ -84,8 +84,8 @@ class BaseScheduler(object):
 
         Parameters
         ----------
-        agent : Agent 
-            An Agent to be added to the schedule. The agent must have a 
+        agent : Agent
+            An Agent to be added to the schedule. The agent must have a
             `step(model)` method.
         '''
         self.agents.append(agent)
@@ -96,7 +96,7 @@ class BaseScheduler(object):
 
         Parameters
         ----------
-        agent : Agent 
+        agent : Agent
             Agent object to remove.
         '''
         while agent in self.agents:
