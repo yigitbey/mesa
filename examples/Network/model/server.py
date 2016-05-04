@@ -15,16 +15,17 @@ class VirusAgent(Agent):
 class VirusModel(Model):
 
     # setting average node degree to '6' <-- TODO turn to slider
-    def __init__(self, N, G=None, avg_node_degree=6):
+    def __init__(self, N, G=None, avg_degree=6):
         self.num_agents = N
 
-        if not G:
-            self.graph = self._create_network()
-        else:
-            self.graph = G
+        self.graph = G
+        if not self.graph:
+            self.graph = self._create_network(avg_degree)
+
+        print(self.graph)
 
     # TODO: Discuss - maybe this is abstracted out / generalized?
-    def _create_network(self):
+    def _create_network(self, avg_degree):
 
         G = nx.Graph()
         for i in range(self.num_agents):
@@ -32,16 +33,18 @@ class VirusModel(Model):
             a = VirusAgent(i)
             G.add_node(a)
 
-        num_links = (self.avg_node_degree * self.num_agents / 2)
+        num_links = (avg_degree * self.num_agents / 2)
         while len(G.edges()) <= num_links:
-            firstn = choice(G.nodes())
+            first = choice(G.nodes())
             possible_nodes = G.nodes()
-            possible_nodes.remove(firstn)
-            secondn = choice(possible_nodes)
+            possible_nodes.remove(first)
+            second = choice(possible_nodes)
 
             edges = G.edges()
 
             # TODO: Rewrite for directed graphs
             # add a way for this to be handled.
-            if (firstn, secondn) not in edges and (secondn, firstn):
-                G.add_edge(firstn, secondn)
+            if (first, second) not in edges and (second, first) not in edges:
+                G.add_edge(first, second)
+
+        self.graph = G
