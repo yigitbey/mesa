@@ -11,10 +11,32 @@ activation regime being used. By maintaining a (more or less) consistent API,
 we make it easy to quickly swap one activation regime for another, in order
 to test whether this changes the model's overall behavior.
 
-Basic Concepts
------------------
+Scheduler API
+^^^^^^^^^^^^^^
 
-Most models advance in **steps**. 
+A Scheduler is generally created inside the model's init function::
+
+    from mesa import Model, Agent
+    from mesa.time import BaseScheduler
+    
+    class MyModel(Model):
+        def __init__(self):
+            self.schedule = BaseScheduler(self)
+
+Agents are added to the schedule using the ``add`` method::
+    
+        # ...
+            a = MyAgent(unique_id)
+            self.schedule.add(a)
+
+
+And can be removed using ``remove``, e.g.::
+
+    def kill_agent(self, agent):
+        '''Remove an agent from the model.'''
+        self.schedule.remove(agent)
+
+
 
 """
 
