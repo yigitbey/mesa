@@ -37,6 +37,19 @@ And can be removed using ``remove``, e.g.::
         self.schedule.remove(agent)
 
 
+To run all the agents according to the Scheduler's specified regime, use the
+``step`` method, e.g.::
+
+    def step(self):
+        self.schedule.step()
+
+``add`` and ``remove`` are implemented in  ``BaseScheduler``, and can be
+inherited directly. `
+
+`step`` is what differentiates each Scheduler, since that is where the actual
+activation logic is specified. For simple schedulers (e.g. ``BaseScheduler``)
+the agent activation is contained in each agent's ``step`` method. 
+
 
 """
 
