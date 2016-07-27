@@ -3,6 +3,10 @@
 Container for all built-in visualization modules.
 """
 
-from mesa.visualization.modules.CanvasGridVisualization import CanvasGrid  # flake8: noqa
-from mesa.visualization.modules.ChartVisualization import ChartModule  # flake8: noqa
-from mesa.visualization.modules.TextVisualization import TextElement  # flake8: noqa
+from .CanvasGridVisualization import CanvasGrid
+from .ChartVisualization import ChartModule
+from .TextVisualization import TextElement
+from .NetworkVisualization import Network
+
+
+__all__ = ["CanvasGrid", "ChartModule", "TextElement", "Network"]
